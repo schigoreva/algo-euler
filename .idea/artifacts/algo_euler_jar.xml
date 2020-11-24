@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="algo-euler:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/algo_euler_jar</output-path>
+    <root id="archive" name="algo-euler.jar">
+      <element id="module-output" name="algo-euler" />
+    </root>
+  </artifact>
+</component>

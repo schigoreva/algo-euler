@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_algo-salesman" default="compile.module.algo-salesman">
+  <dirname property="module.algo-salesman.basedir" file="${ant.file.module_algo-salesman}"/>
+  
+  <property name="module.jdk.home.algo-salesman" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.algo-salesman" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.algo-salesman" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.algo-salesman" value="-encoding UTF-8 -source 11 -target 11 ${compiler.args}"/>
+  
+  <property name="algo-salesman.output.dir" value="${module.algo-salesman.basedir}/out/production/algo-salesman"/>
+  <property name="algo-salesman.testoutput.dir" value="${module.algo-salesman.basedir}/out/test/algo-salesman"/>
+  
+  <path id="algo-salesman.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="algo-salesman.module.production.classpath">
+    <path refid="${module.jdk.classpath.algo-salesman}"/>
+  </path>
+  
+  <path id="algo-salesman.runtime.production.module.classpath">
+    <pathelement location="${algo-salesman.output.dir}"/>
+  </path>
+  
+  <path id="algo-salesman.module.classpath">
+    <path refid="${module.jdk.classpath.algo-salesman}"/>
+    <pathelement location="${algo-salesman.output.dir}"/>
+  </path>
+  
+  <path id="algo-salesman.runtime.module.classpath">
+    <pathelement location="${algo-salesman.testoutput.dir}"/>
+    <pathelement location="${algo-salesman.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.algo-salesman">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.algo-salesman">
+    <patternset refid="excluded.from.module.algo-salesman"/>
+  </patternset>
+  
+  <path id="algo-salesman.module.sourcepath">
+    <dirset dir="${module.algo-salesman.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.algo-salesman" depends="compile.module.algo-salesman.production,compile.module.algo-salesman.tests" description="Compile module algo-salesman"/>
+  
+  <target name="compile.module.algo-salesman.production" depends="register.custom.compilers" description="Compile module algo-salesman; production classes">
+    <mkdir dir="${algo-salesman.output.dir}"/>
+    <javac2 destdir="${algo-salesman.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.algo-salesman}/javac">
+      <compilerarg line="${compiler.args.algo-salesman}"/>
+      <bootclasspath refid="algo-salesman.module.bootclasspath"/>
+      <classpath refid="algo-salesman.module.production.classpath"/>
+      <src refid="algo-salesman.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.algo-salesman"/>
+    </javac2>
+    
+    <copy todir="${algo-salesman.output.dir}">
+      <fileset dir="${module.algo-salesman.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.algo-salesman.tests" depends="register.custom.compilers,compile.module.algo-salesman.production" description="compile module algo-salesman; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.algo-salesman" description="cleanup module">
+    <delete dir="${algo-salesman.output.dir}"/>
+    <delete dir="${algo-salesman.testoutput.dir}"/>
+  </target>
+</project>
