@@ -7,10 +7,12 @@ import java.util.stream.IntStream;
 public class GraphModel {
 
     private int vertexNumber;
+    private int edgeNumber;
     private List<List<Integer>> graph;
 
     public GraphModel() {
         vertexNumber = 0;
+        edgeNumber = 0;
         graph = new ArrayList<>();
         graph.add(List.of()); //заглушка для нулевой вершины
     }
@@ -42,6 +44,7 @@ public class GraphModel {
         if (graph.get(a).contains(b)) {
             throw new IllegalArgumentException("Нельзя добавлять кратные ребра");
         }
+        edgeNumber++;
         graph.get(a).add(b);
         graph.get(b).add(a);
     }
@@ -107,8 +110,13 @@ public class GraphModel {
     }
 
     public void undoAddEdge(int a, int b) throws IllegalArgumentException {     // отмена ребра, созданного предыдущим шагом
-        graph.get(a).remove(b);
-        graph.get(b).remove(a);
+        graph.get(a).remove(Integer.valueOf(b));
+        graph.get(b).remove(Integer.valueOf(a));
+        edgeNumber--;
+    }
+
+    public int getEdgeNumber() {
+        return edgeNumber;
     }
 
     static class Edge {
